@@ -129,3 +129,18 @@ Cloud & DevOps | AWS | Terraform | Infrastructure as Code
 ---
 
 *Projet pédagogique évolutif : les composants indiqués dans les évolutions prévues ne sont pas encore déployés.*
+
+## 🏗️ Architecture
+
+![AWS High Availability Architecture](docs/architecture.png)
+
+L'infrastructure repose sur un VPC réparti sur deux zones
+de disponibilité dans la région AWS `us-east-1`.
+
+Elle comprend deux sous-réseaux publics, deux sous-réseaux
+privés, un Internet Gateway, des tables de routage séparées
+et des groupes de sécurité dédiés.
+
+> **État actuel :** le réseau et les groupes de sécurité sont
+> déployés avec Terraform. L'ALB et les instances EC2 restent
+> des évolutions prévues.
