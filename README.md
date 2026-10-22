@@ -164,6 +164,27 @@ terraform -chdir=terraform destroy
 - [ ] Ajouter une pipeline CI/CD pour automatiser la validation Terraform.
 - [ ] Renforcer la gestion des coûts et les contrôles de sécurité.
 
+## Tests et validation
+
+### 1. Répartition du trafic
+- 10 requêtes HTTP consécutives envoyées via l'Application Load Balancer.
+- Résultat : **10 réponses HTTP 200**.
+- Les deux instances EC2 ont répondu chacune à 5 requêtes, confirmant la répartition du trafic entre les cibles.
+
+### 2. Remplacement automatique d'une instance
+- Terminaison volontaire d'une instance EC2 sans réduire la capacité désirée de l'Auto Scaling Group.
+- L'Auto Scaling Group a conservé une capacité désirée de 2 instances.
+- Après la transition, les deux instances étaient `InService` et `Healthy`.
+- Le Target Group de l'ALB affichait les deux instances à l'état `healthy`.
+
+### 3. Vérification après remplacement
+- 10 nouvelles requêtes HTTP via l'ALB.
+- Résultat : **10 réponses HTTP 200**.
+- Les deux serveurs ont continué à répondre après le remplacement de l'instance.
+
+**Conclusion :** les tests valident la répartition du trafic, le remplacement d'une instance EC2 par l'Auto Scaling Group et le maintien de l'accès HTTP à l'application après ce remplacement.
+
+
 ## 👨‍💻 Auteur
 
 **Khadim Mbaye**  
@@ -172,5 +193,7 @@ Cloud & DevOps | AWS | Terraform | Infrastructure as Code
 - GitHub : [@kmbamba](https://github.com/kmbamba)
 
 ---
+
+
 
 *Projet pédagogique : l'architecture a été déployée et testée sur AWS. Les améliorations listées ci-dessus restent des évolutions possibles et ne sont pas présentées comme déjà réalisées.*
